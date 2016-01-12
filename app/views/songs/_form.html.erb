@@ -1,0 +1,29 @@
+<%= form_for(@song) do |f| %>
+  <% if @song.errors.any? %>
+    <div class="alert alert-info">
+      <p><%= pluralize(@song.errors.count, "error") %> prohibited this song from being saved:</p>
+
+      <ul>
+      <% @song.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :title %><br>
+    <%= f.text_field :title, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :artist %><br>
+    <%= f.text_field :artist, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <strong><p>Youtube Music Video URL</strong></p>
+    <%= f.text_field :url, class: "form-control" %>
+  </div>
+  <div class="action">
+    <%= f.submit 'Submit', class: "btn btn-primary btn-gap" %>
+  </div>
+<% end %>

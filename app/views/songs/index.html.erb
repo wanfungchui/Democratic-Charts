@@ -1,0 +1,35 @@
+<div id="picks">DEMOCRATIC PICKS OF THE WEEK</div>
+<hr>
+
+<% count = 1 %>
+<% @songs.each do |song| %>
+  <% vidid = song.url.split("v=")[1] %>
+  <div class="row" style="margin:15px;padding:10px">
+    <div class="col-sm-4" style="margin-top:5px">
+      <%= link_to image_tag("http://img.youtube.com/vi/" + vidid + "/mqdefault.jpg", size: "192x108"), song %>
+    </div>
+    <div class="col-sm-8">
+      <h2 style="margin-top: 0px;"><strong><%= count %></strong> <%= link_to (song.artist + ' - ' + song.title), song %></h2>
+      <p>Votes: <strong><%= song.get_upvotes.size %></strong> | Nominated <strong><%= time_ago_in_words(song.created_at) %> ago</strong> by <%= song.user.name %></p>
+      <% if song.user == current_user %>
+        <%= link_to edit_song_path(song), class: "btn btn-default btn-md" do %>
+        <span class="glyphicon glyphicon-pencil"></span>
+        Edit Nomination
+        <% end %>
+        <%= link_to song, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default btn-md" do %>
+        <span class="glyphicon glyphicon-trash"></span>
+        Withdraw Nomination
+        <% end %>
+      <% else %>
+        <%= link_to like_song_path(song), method: :put, class: "btn btn-primary btn-block" do %>
+        <span class="glyphicon glyphicon-heart-empty pull-left"></span>
+        Vote
+        <span class="glyphicon glyphicon-heart-empty pull-right"></span>
+
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <hr>
+  <% count += 1 %>
+<% end %>

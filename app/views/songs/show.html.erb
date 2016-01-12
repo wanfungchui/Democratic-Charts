@@ -1,0 +1,46 @@
+<div style="width:100%;padding:20px">
+<h1>
+  <%= @song.artist %> - <%= @song.title %>
+  <%= link_to 'Back To Chart', songs_path, class: "btn btn-primary btn-md pull-right" %>
+</h1>
+
+<p>Votes: <strong><%= @song.get_upvotes.size %></strong> | Nominated <strong><%= time_ago_in_words(@song.created_at) %> ago</strong> by <%= @song.user.name %></p>
+
+  <% if @song.user == current_user %>
+    You cannot vote for a song you nominated!
+    <%= link_to edit_song_path(@song), class: "btn btn-default btn-md pull-right" do %>
+        <span class="glyphicon glyphicon-pencil"></span>
+        Edit Nomination
+        <% end %>
+  <% else %>
+    <%= link_to like_song_path(@song), method: :put, class: "btn btn-primary btn-block" do %>
+        <span class="glyphicon glyphicon-heart-empty pull-left"></span>
+        Vote
+        <span class="glyphicon glyphicon-heart-empty pull-right"></span>
+        <% end %>
+  <% end %>
+</div>
+
+<br>
+
+  <% vidid = @song.url.split("v=")[1] %>
+  <div class="iframewrap">
+    <iframe src="<%= "http://www.youtube.com/embed/" + vidid + "?autoplay=1" %>"></iframe>
+  </div>
+  
+<h3 class="comments_title">
+  All Comments (<%= @song.comments.count %>)
+</h3>
+
+<div id="comments">
+  <%= render :partial => @song.comments %>
+</div>
+<div style="padding:20px">
+<%= simple_form_for [@song, Comment.new]  do |f| %>
+  <div class="field">
+    <%= f.text_area :body, class: "form-control" %>
+  </div>
+  <br>
+  <%= f.submit "Add Comment", class: "btn btn-primary" %>
+<% end %>
+</div>
