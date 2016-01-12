@@ -5,7 +5,7 @@ class SongsController < ApplicationController
   # GET /songs
   # GET /songs.json
   def index
-    @songs = Song.all
+    @songs = Song.order(:cached_votes_total => :desc)
   end
 
   # GET /songs/1
