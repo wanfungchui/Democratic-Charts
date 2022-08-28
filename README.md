@@ -8,4 +8,5 @@ The application accepts song nominations from logged-in users, who vote for song
 The Devise gem runs the user account capability, while acts_as_upvotable runs the voting system.
 
 # Usage
-You can check the heroku-hosted web application [here](http://democratic-charts.herokuapp.com/).
+
+As of 2022, this is no longer available on Heroku (former link: [here](http://democratic-charts.herokuapp.com/)).
